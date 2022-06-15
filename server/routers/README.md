@@ -35,6 +35,7 @@ Request {
 }
 
 Response 201 { Created }
+Error 400 { Invalid form } 필요한 데이터 양식이 없을 때
 Error 401 { Not Authorized, Login Please }
 ```
 
@@ -55,6 +56,8 @@ Request {
 }
 
 Response 200 { Edited }
+Error 400 { Invalid form } 필요한 데이터 양식이 없을 때
+Error 400 { Invalid id } id가 잘못되었을 때
 Error 401 { Not Authorized, or Not correct writer }
 Error 404 { id doesn't exist }
 ```
@@ -63,6 +66,6 @@ Error 404 { id doesn't exist }
 DELETE /tweets/:id 트윗 삭제하기
 
 Response 204
+Error 400 { Invalid id } id가 잘못되었을 때
 Error 401 { Not Authorized, or Not correct writer }
-Error 404 { id doesn't exist }
 ```

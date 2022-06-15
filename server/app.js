@@ -16,8 +16,7 @@ app.use(helmet());
 app.use("/tweets", tweetRouter);
 
 connectDB()
-  .then((db) => {
-    console.log("init!", db);
+  .then(() => {
     const server = app.listen(PORT);
   })
   .catch(console.error);
