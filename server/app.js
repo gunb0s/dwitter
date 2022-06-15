@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
+import { connectDB } from "./database/database.js";
 
 const PORT = 8080;
 
@@ -12,6 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 
-app.listen(PORT, () => {
-  console.log(`Listening server ${PORT}...`);
-});
+connectDB()
+  .then((db) => {
+    console.log("init!", db);
+    const server = app.listen(PORT);
+  })
+  .catch(console.error);
