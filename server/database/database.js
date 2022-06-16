@@ -19,14 +19,27 @@ export function getTweets(username = undefined) {
   }
 }
 
+export function getTweetsById(id) {
+  let tweetCollection = db.collection("tweets");
+  try {
+    const filter = { _id: new ObjectId(id) };
+    return tweetCollection.find(filter).toArray();
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 export function createTweet(username, name, content, url) {
   let tweetCollection = db.collection("tweets");
-  return tweetCollection.insertOne({
-    content,
-    name,
-    username,
-    url,
-  });
+  return tweetCollection
+    .insertOne({
+      content,
+      name,
+      username,
+      url,
+    })
+    .then((result) => result.insertedId)
+    .then((id) => tweetCollection.findOne({ _id: new ObjectId(id) }));
 }
 
 export function editTweet(id, content) {
@@ -39,7 +52,8 @@ export function editTweet(id, content) {
         content,
       },
     };
-    return tweetCollection.updateOne(filter, update);
+    tweetCollection.updateOne(filter, update);
+    return tweetCollection.findOne(filter);
   } catch (err) {
     throw new Error(err);
   }

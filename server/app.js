@@ -15,6 +15,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use("/tweets", tweetRouter);
 
+app.use((req, res) => {
+  res.sendStatus(404);
+});
+
+app.use((error, res, req, next) => {
+  console.error(error);
+  res.sendStatus(500);
+});
+
 connectDB()
   .then(() => {
     const server = app.listen(PORT);
