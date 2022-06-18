@@ -1,7 +1,8 @@
 import React from "react";
 import TwitterBar from "./components/TwitterBar";
 
-const wrapper = "w-screen h-screen flex justify-center items-center";
+const wrapper =
+  "w-screen h-screen flex justify-center items-center overflow-auto";
 const main = "w-[36rem] h-[50rem] bg-slate-200 drop-shadow-2xl";
 
 const App = () => {
