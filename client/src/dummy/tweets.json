@@ -1,0 +1,20 @@
+{
+  "tweets": [
+    {
+      "id": "0",
+      "content": "hello, dwitteraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "name": "Bo Seong Kim",
+      "username": "cain",
+      "url": "https://gravatar.com/avatar/1d4205eb8d001fa00c250d50200e55f4?s=400&d=robohash&r=x",
+      "createdAt": 1655523433672
+    },
+    {
+      "id": "1",
+      "content": "dreamcoding tutor",
+      "name": "Ellie",
+      "username": "ellie",
+      "url": "https://gravatar.com/avatar/bad21ba4667e3b906569a96bf9cb79e8?s=400&d=robohash&r=x",
+      "createdAt": 1655523433672
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import TweetInput from "./components/TweetInput";
+import Tweets from "./components/Tweets";
 import TwitterBar from "./components/TwitterBar";
 
 const wrapper =
@@ -12,6 +13,7 @@ const App = () => {
       <main className={main}>
         <TwitterBar />
         <TweetInput />
+        <Tweets />
       </main>
     </div>
   );
