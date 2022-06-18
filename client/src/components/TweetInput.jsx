@@ -4,7 +4,7 @@ const TweetInput = () => {
   return (
     <div className="w-full">
       <input
-        className="w-full outline-none p-2"
+        className="w-full outline-none p-2 font-joans"
         type="text"
         placeholder="Enter tweet..."
       />
