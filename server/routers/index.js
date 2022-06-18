@@ -1,3 +1,3 @@
-import tweetRouter from "./tweetRouter.js";
+import tweetRouter from "./tweets.js";
 
 export { tweetRouter };

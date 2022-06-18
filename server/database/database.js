@@ -10,7 +10,7 @@ export async function connectDB() {
     });
 }
 
-export function getTweets(username = undefined) {
+export function getAll(username = undefined) {
   let tweetCollection = db.collection("tweets");
   if (username === undefined) {
     return tweetCollection.find().toArray();
@@ -19,7 +19,7 @@ export function getTweets(username = undefined) {
   }
 }
 
-export function getTweetsById(id) {
+export function getById(id) {
   let tweetCollection = db.collection("tweets");
   try {
     const filter = { _id: new ObjectId(id) };
@@ -29,7 +29,7 @@ export function getTweetsById(id) {
   }
 }
 
-export function createTweet(username, name, content, url) {
+export function create(username, name, content, url) {
   let tweetCollection = db.collection("tweets");
   return tweetCollection
     .insertOne({
@@ -42,7 +42,7 @@ export function createTweet(username, name, content, url) {
     .then((id) => tweetCollection.findOne({ _id: new ObjectId(id) }));
 }
 
-export function editTweet(id, content) {
+export function update(id, content) {
   let tweetCollection = db.collection("tweets");
 
   try {
@@ -59,7 +59,7 @@ export function editTweet(id, content) {
   }
 }
 
-export function deleteTweet(id) {
+export function remove(id) {
   let tweetCollection = db.collection("tweets");
 
   try {
