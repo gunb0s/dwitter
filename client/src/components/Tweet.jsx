@@ -1,7 +1,10 @@
-import React from "react";
-import { Edit, Delete } from "@mui/icons-material";
+import React, { useState } from "react";
+import { MoreHoriz } from "@mui/icons-material";
+import TweetOperation from "./TweetOperation";
 
 const Tweet = ({ data }) => {
+  const [tweetOperation, setTweetOperation] = useState(false);
+
   return (
     <div className="relative bg-white w-full flex gap-3 my-4 p-4 rounded-lg">
       <div className="rounded-full">
@@ -18,13 +21,17 @@ const Tweet = ({ data }) => {
         <div className="pb-8 break-all">{data.content}</div>
       </div>
       <div className="absolute bottom-3 right-6">
-        <button className="mr-4">
-          <Edit />
-        </button>
-        <button>
-          <Delete />
+        <button
+          onClick={() => {
+            setTweetOperation((prev) => !prev);
+          }}
+        >
+          <MoreHoriz fontSize="small" />
         </button>
       </div>
+      {tweetOperation && (
+        <TweetOperation setTweetOperation={setTweetOperation} />
+      )}
     </div>
   );
 };
