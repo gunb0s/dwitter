@@ -2,6 +2,7 @@ import React, { memo, useState } from "react";
 import { MoreHoriz } from "@mui/icons-material";
 import TweetOperation from "./TweetOperation";
 import TweetEditForm from "./TweetEditForm";
+import Avatar from "./Avatar";
 
 const Tweet = memo(({ tweet, onUpdate, onDelete }) => {
   const [tweetOperation, setTweetOperation] = useState(false);
@@ -16,7 +17,7 @@ const Tweet = memo(({ tweet, onUpdate, onDelete }) => {
   return (
     <div className="relative bg-white w-full flex gap-3 my-4 p-4 rounded-lg">
       <div className="rounded-full">
-        <img className="w-10 h-10 rounded-full" src={tweet.url} alt="avatar" />
+        <Avatar url={tweet.url} username={tweet.username} />
       </div>
       <div className="w-full flex flex-col">
         <div className="mb-3">
