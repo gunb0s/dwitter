@@ -3,7 +3,7 @@ import React from "react";
 const li = "text-sm font-joans cursor-pointer";
 const span = "hover:bg-white p-1 pr-4 w-full";
 
-const TweetOperation = ({ onOperationClose, onEdit }) => {
+const TweetOperation = ({ onOperationClose, onEdit, handleDelete }) => {
   return (
     <div className="absolute bottom-8 -right-2 shadow-lg z-10 bg-slate-100 rounded-md">
       <ul>
@@ -20,6 +20,7 @@ const TweetOperation = ({ onOperationClose, onEdit }) => {
           className={li}
           onClick={() => {
             onOperationClose();
+            handleDelete();
           }}
         >
           <div className={span}>delete</div>

@@ -3,12 +3,15 @@ import { MoreHoriz } from "@mui/icons-material";
 import TweetOperation from "./TweetOperation";
 import TweetEditForm from "./TweetEditForm";
 
-const Tweet = memo(({ tweet, onUpdate }) => {
+const Tweet = memo(({ tweet, onUpdate, onDelete }) => {
   const [tweetOperation, setTweetOperation] = useState(false);
   const [editing, setEditing] = useState(false);
   const onOperationClose = () => setTweetOperation(false);
   const onEdit = () => setEditing(true);
   const onEditClose = () => setEditing(false);
+  const handleDelete = () => {
+    onDelete(tweet._id);
+  };
 
   return (
     <div className="relative bg-white w-full flex gap-3 my-4 p-4 rounded-lg">
@@ -48,6 +51,7 @@ const Tweet = memo(({ tweet, onUpdate }) => {
             <TweetOperation
               onOperationClose={onOperationClose}
               onEdit={onEdit}
+              handleDelete={handleDelete}
             />
           )}
         </>

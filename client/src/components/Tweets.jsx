@@ -29,6 +29,14 @@ const Tweets = ({ tweetService, addable }) => {
       .catch((error) => setError(error.toString()));
   };
 
+  const onDelete = (id) => {
+    tweetService ///
+      .remove(id)
+      .then(() =>
+        setTweets((tweets) => tweets.filter((item) => item._id !== id))
+      );
+  };
+
   const onError = (error) => {
     setError(error.toString());
     setTimeout(() => {
@@ -49,7 +57,12 @@ const Tweets = ({ tweetService, addable }) => {
       {tweets.length === 0 && <p>No Tweets Yet</p>}
       <div className="w-full h-full bg-zinc-100 px-5 overflow-auto">
         {tweets.map((tweet) => (
-          <Tweet key={tweet._id} tweet={tweet} onUpdate={onUpdate} />
+          <Tweet
+            key={tweet._id}
+            tweet={tweet}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          />
         ))}
       </div>
     </>
