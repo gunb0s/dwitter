@@ -10,7 +10,7 @@ const Tweets = ({ tweetService, addable }) => {
   useEffect(() => {
     tweetService
       .getAll() ///
-      .then((res) => setTweets([...res.tweets]))
+      .then((tweets) => setTweets([...tweets]))
       .catch((error) => setError(error.toString()));
   }, [tweetService]);
 
@@ -36,7 +36,7 @@ const Tweets = ({ tweetService, addable }) => {
       )}
       {error && <Banner text={error} isAlert={true} transient={true} />}
       {tweets.length === 0 && <p>No Tweets Yet</p>}
-      <div className="w-full h-full bg-zinc-100 px-5">
+      <div className="w-full h-full bg-zinc-100 px-5 overflow-auto">
         {tweets.map((tweet) => (
           <Tweet key={tweet._id} tweet={tweet} />
         ))}
