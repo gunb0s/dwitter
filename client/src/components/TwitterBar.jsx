@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
 const wrapper = "relative w-full h-28 p-10 bg-zinc-100";
@@ -6,7 +6,7 @@ const logo_wrapper = "flex h-full items-center cursor-pointer";
 const logo_image = "w-8 h-8 mr-2";
 const username = "absolute bottom-3 right-6 text-sm";
 
-const TwitterBar = () => {
+const TwitterBar = memo(() => {
   const navigate = useNavigate();
 
   const onAllTweets = () => {
@@ -22,6 +22,6 @@ const TwitterBar = () => {
       <div className={username}>username</div>
     </div>
   );
-};
+});
 
 export default TwitterBar;
