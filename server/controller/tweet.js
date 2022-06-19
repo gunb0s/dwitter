@@ -18,7 +18,7 @@ export async function createTweets(req, res) {
   }
 
   let tweet = await tweetRepository.create(username, name, content, url);
-  res.status(201).json({ tweet });
+  res.status(201).json(tweet);
 }
 
 export async function getTweet(req, res) {

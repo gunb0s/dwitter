@@ -10,11 +10,11 @@ export class TweetService {
     return this.http.request(`/tweets/${id}`, { method: "get" });
   }
 
-  async create(text) {
+  async create(content) {
     return this.http.request("/tweets", {
       method: "post",
       data: {
-        text,
+        content,
         username: "cain",
         name: "Bo Seong Kim",
       },

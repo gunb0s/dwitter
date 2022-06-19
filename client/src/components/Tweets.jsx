@@ -14,6 +14,10 @@ const Tweets = ({ tweetService, addable }) => {
       .catch((error) => setError(error.toString()));
   }, [tweetService]);
 
+  const onCreated = (tweet) => {
+    setTweets((tweets) => [tweet, ...tweets]);
+  };
+
   const onError = (error) => {
     setError(error.toString());
     setTimeout(() => {
@@ -23,7 +27,13 @@ const Tweets = ({ tweetService, addable }) => {
 
   return (
     <>
-      {addable && <TweetInput onError={onError} tweetService={tweetService} />}
+      {addable && (
+        <TweetInput
+          onError={onError}
+          tweetService={tweetService}
+          onCreated={onCreated}
+        />
+      )}
       {error && <Banner text={error} isAlert={true} transient={true} />}
       {tweets.length === 0 && <p>No Tweets Yet</p>}
       <div className="w-full h-full bg-zinc-100 px-5">
