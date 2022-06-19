@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
-import TweetInput from "./components/TweetInput";
-import Tweets from "./components/Tweets";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import TwitterBar from "./components/TwitterBar";
+import AllTweets from "./pages/AllTweets";
+import MyTweets from "./pages/MyTweets";
 
 const wrapper =
   "w-screen h-screen flex justify-center items-center overflow-auto";
 const main = "w-[36rem] h-[50rem] bg-slate-200 drop-shadow-2xl flex flex-col";
 
 const App = ({ tweetService }) => {
-  const [tweets, setTweets] = useState();
-
-  useEffect(() => {
-    tweetService
-      .getAll() ///
-      .then((data) => setTweets(data));
-  }, []);
-
   return (
     <div className={wrapper}>
       <main className={main}>
         <TwitterBar />
-        <TweetInput />
-        <Tweets />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={<AllTweets tweetService={tweetService} />}
+          />
+          <Route
+            exact
+            path="/:username"
+            element={<MyTweets tweetService={tweetService} />}
+          />
+        </Routes>
       </main>
     </div>
   );
