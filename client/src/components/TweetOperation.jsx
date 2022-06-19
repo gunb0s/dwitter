@@ -3,14 +3,15 @@ import React from "react";
 const li = "text-sm font-joans cursor-pointer";
 const span = "hover:bg-white p-1 pr-4 w-full";
 
-const TweetOperation = ({ setTweetOperation }) => {
+const TweetOperation = ({ onOperationClose, onEdit }) => {
   return (
     <div className="absolute bottom-8 -right-2 shadow-lg z-10 bg-slate-100 rounded-md">
       <ul>
         <li
           className={`${li} mb-1`}
           onClick={() => {
-            setTweetOperation(false);
+            onOperationClose();
+            onEdit();
           }}
         >
           <div className={span}>edit</div>
@@ -18,7 +19,7 @@ const TweetOperation = ({ setTweetOperation }) => {
         <li
           className={li}
           onClick={() => {
-            setTweetOperation(false);
+            onOperationClose();
           }}
         >
           <div className={span}>delete</div>

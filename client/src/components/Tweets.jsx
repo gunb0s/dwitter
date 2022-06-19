@@ -18,6 +18,17 @@ const Tweets = ({ tweetService, addable }) => {
     setTweets((tweets) => [tweet, ...tweets]);
   };
 
+  const onUpdate = (id, content) => {
+    tweetService
+      .update(id, content) ///
+      .then((updated) =>
+        setTweets((tweets) =>
+          tweets.map((item) => (item._id === updated._id ? updated : item))
+        )
+      )
+      .catch((error) => setError(error.toString()));
+  };
+
   const onError = (error) => {
     setError(error.toString());
     setTimeout(() => {
@@ -38,7 +49,7 @@ const Tweets = ({ tweetService, addable }) => {
       {tweets.length === 0 && <p>No Tweets Yet</p>}
       <div className="w-full h-full bg-zinc-100 px-5 overflow-auto">
         {tweets.map((tweet) => (
-          <Tweet key={tweet._id} tweet={tweet} />
+          <Tweet key={tweet._id} tweet={tweet} onUpdate={onUpdate} />
         ))}
       </div>
     </>

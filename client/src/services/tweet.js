@@ -21,10 +21,10 @@ export class TweetService {
     });
   }
 
-  async update(id, text) {
+  async update(id, content) {
     return this.http.request(`/tweets/${id}`, {
       method: "put",
-      data: { text },
+      data: { content },
     });
   }
 
