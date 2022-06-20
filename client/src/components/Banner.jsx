@@ -1,7 +1,7 @@
 import React from "react";
 
-const Banner = () => {
-  return <div>Banner</div>;
+const Banner = ({ text }) => {
+  return <div>{text}</div>;
 };
 
 export default Banner;

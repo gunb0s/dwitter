@@ -6,20 +6,26 @@ export class AxiosInstance {
   }
 
   async request(endpoint, options) {
-    const res = await axios({
-      url: `${this.baseURL}${endpoint}`,
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-    });
+    let res;
 
-    if (res.status > 299 || res.status < 200) {
+    try {
+      res = await axios({
+        url: `${this.baseURL}${endpoint}`,
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+      });
+    } catch (err) {
+      const {
+        response: {
+          data: { errors },
+        },
+      } = err;
+      console.log(errors);
       const message =
-        res.data && res.data.message
-          ? res.data.message
-          : "Something went wrong 😥";
+        errors && errors[0].msg ? errors[0].msg : "Something went wrong 😥";
       throw new Error(message);
     }
 

@@ -13,10 +13,6 @@ export async function getTweets(req, res) {
 export async function createTweets(req, res) {
   const { username, name, content, url } = req.body;
 
-  if (username === undefined || name === undefined || content === undefined) {
-    return res.status(400).send({ message: "invalid form" });
-  }
-
   let tweet = await tweetRepository.create(username, name, content, url);
   res.status(201).json(tweet);
 }
