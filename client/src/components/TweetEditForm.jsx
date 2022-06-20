@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import { Update, Close } from "@mui/icons-material";
 
-const TweetEditForm = ({ tweet, onUpdate, onEditClose }) => {
+const TweetEditForm = ({ tweet, onUpdate, onEditClose, onError }) => {
   const [content, setContent] = useState(tweet.content);
 
   const onChange = (e) => {
     setContent(e.target.value);
   };
 
-  const onSubmit = () => {
+  const handleUpdate = () => {
+    if (content.trim() === "") {
+      onError(new Error("content should not be empty"));
+      return;
+    }
     onUpdate(tweet._id, content);
     setContent("");
     onEditClose();
   };
 
+  const onSubmit = () => {
+    handleUpdate();
+  };
+
   const onKeyUpSubmit = (e) => {
     if (e.key === "Enter") {
-      onUpdate(tweet._id, content);
-      setContent("");
-      onEditClose();
+      handleUpdate();
     }
   };
 

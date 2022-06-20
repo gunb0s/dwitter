@@ -23,7 +23,6 @@ export class AxiosInstance {
           data: { errors },
         },
       } = err;
-      console.log(errors);
       const message =
         errors && errors[0].msg ? errors[0].msg : "Something went wrong 😥";
       throw new Error(message);

@@ -1,17 +1,17 @@
 import express from "express";
-import { body, validationResult } from "express-validator";
+import { body } from "express-validator";
 import * as tweetController from "../controller/tweet.js";
+import { validate } from "../middleware/validator.js";
+
+// Contract Testing: Client-Server
+// Proto-Basing
 
 const router = express.Router();
 
-const validate = (req, res, next) => {
-  const errors = validationResult(req);
-  if (errors.isEmpty()) {
-    return next();
-  } else {
-    return res.status(400).json({ errors: errors.array() });
-  }
-};
+const validateTweet = body("content")
+  .trim()
+  .isLength({ min: 3 })
+  .withMessage("text should be at least 3 characters");
 
 router.get("/", tweetController.getTweets);
 
@@ -20,15 +20,15 @@ router.post(
   [
     body("username").trim().notEmpty(),
     body("name").trim().notEmpty(),
-    body("content").trim().notEmpty(),
+    validateTweet,
     validate,
   ],
   tweetController.createTweets
 );
 
-router.get("/:id", tweetController.getTweet);
+router.get("/:id", tweetController.getTweetById);
 
-router.put("/:id", tweetController.updateTweet);
+router.put("/:id", [validateTweet, validate], tweetController.updateTweet);
 
 router.delete("/:id", tweetController.removeTweet);
 

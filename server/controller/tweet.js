@@ -17,7 +17,7 @@ export async function createTweets(req, res) {
   res.status(201).json(tweet);
 }
 
-export async function getTweet(req, res) {
+export async function getTweetById(req, res) {
   const { id } = req.params;
 
   try {
@@ -31,10 +31,6 @@ export async function getTweet(req, res) {
 export async function updateTweet(req, res) {
   const { content } = req.body;
   const { id } = req.params;
-
-  if (content === undefined) {
-    return res.status(400).send({ message: "invalid form" });
-  }
 
   try {
     let tweet = await tweetRepository.update(id, content);

@@ -4,7 +4,7 @@ import TweetOperation from "./TweetOperation";
 import TweetEditForm from "./TweetEditForm";
 import Avatar from "./Avatar";
 
-const Tweet = memo(({ tweet, onUpdate, onDelete }) => {
+const Tweet = memo(({ tweet, onUpdate, onDelete, onError }) => {
   const [tweetOperation, setTweetOperation] = useState(false);
   const [editing, setEditing] = useState(false);
   const onOperationClose = () => setTweetOperation(false);
@@ -32,6 +32,7 @@ const Tweet = memo(({ tweet, onUpdate, onDelete }) => {
             tweet={tweet}
             onUpdate={onUpdate}
             onEditClose={onEditClose}
+            onError={onError}
           />
         ) : (
           <div className="pb-8 break-all font-joans">{tweet.content}</div>

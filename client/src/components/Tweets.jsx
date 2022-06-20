@@ -26,7 +26,7 @@ const Tweets = ({ tweetService, addable }) => {
           tweets.map((item) => (item._id === updated._id ? updated : item))
         )
       )
-      .catch((error) => setError(error.toString()));
+      .catch((error) => onError(error.toString()));
   };
 
   const onDelete = (id) => {
@@ -62,6 +62,7 @@ const Tweets = ({ tweetService, addable }) => {
             tweet={tweet}
             onUpdate={onUpdate}
             onDelete={onDelete}
+            onError={onError}
           />
         ))}
       </div>
