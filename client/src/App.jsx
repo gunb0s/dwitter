@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import TwitterBar from "./components/TwitterBar";
 import AllTweets from "./pages/AllTweets";
+import Login from "./pages/Login";
 import MyTweets from "./pages/MyTweets";
 
 const wrapper =
@@ -24,6 +25,7 @@ const App = ({ tweetService }) => {
             path="/:username"
             element={<MyTweets tweetService={tweetService} />}
           />
+          <Route exact path="/login" element={<Login />} />
         </Routes>
       </main>
     </div>
