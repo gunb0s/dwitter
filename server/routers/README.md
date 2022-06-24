@@ -2,10 +2,20 @@
 
 ```
 tweet {
-    _id: string,
+    id: string,
     content: string,
     name: string,
     username: string,
+    url?: string,
+    createdAt: Date
+}
+
+user {
+    id: string,
+    username: string,
+    password: string,
+    name: string,
+    email: string,
     url?: string,
     createdAt: Date
 }
@@ -13,12 +23,12 @@ tweet {
 
 ## API 디자인
 
-### 🍟 LogIn
+### 🍟 Auth
 
-**POST** /login 로그인하기
+**POST** /auth/login 로그인하기
 
     Request {
-        id: string
+        username: string
         password: string
     }
 
@@ -26,6 +36,7 @@ tweet {
 
     Response 201 {
         token: string
+        username: string
     }
     Error 400 {
         it doesn't exist
@@ -34,19 +45,29 @@ tweet {
         password is not correct
     }
 
-**POST** /signup 회원가입하기
+**POST** /auth/signup 회원가입하기
 
     Request {
-        id: string
         password: string
         username: string
         name: string
+        email: string
         url?: string
+    }
+
+**GET** /auth/me
+
+    Request {
+        token
+        username
     }
 
 <br>
 
-    Response 201
+    Response 201 {
+        token,
+        username
+    }
     Error 400 {
         id already exist
     }
