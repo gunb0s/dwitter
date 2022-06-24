@@ -2,7 +2,7 @@
 
 ---
 
-```json
+```
 tweet {
     id: string,
     content: string,
@@ -17,7 +17,7 @@ tweet {
 
 ---
 
-```json
+```
 GET /tweets 모든 트윗 가져오기
 
 Response 200 {
@@ -25,7 +25,7 @@ Response 200 {
 }
 ```
 
-```json
+```
 POST /tweets 새로운 트윗 생성
 
 Request {
@@ -39,7 +39,7 @@ Error 400 { Invalid form } 필요한 데이터 양식이 없을 때
 Error 401 { Not Authorized, Login Please }
 ```
 
-```json
+```
 GET /tweets?username=:username 해당 유저의 트윗 가져오기
 
 Response 200 {
@@ -48,7 +48,7 @@ Response 200 {
 Error 404 { userId doesn't exist }
 ```
 
-```json
+```
 PUT /tweets/:id 트윗 편집하기
 
 Request {
@@ -62,7 +62,7 @@ Error 401 { Not Authorized, or Not correct writer }
 Error 404 { id doesn't exist }
 ```
 
-```json
+```
 DELETE /tweets/:id 트윗 삭제하기
 
 Response 204
