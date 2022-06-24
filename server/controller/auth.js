@@ -5,8 +5,7 @@ import jwt from "jsonwebtoken";
 export async function login(req, res) {
   const { username, password } = req.body;
 
-  const hash = await bcrypt.hash(password, 10);
-  const user = await authRepository.findUser(username, hash);
+  const user = await authRepository.findUser(username);
 
   if (user === null) {
     return res.status(400).json({ message: "it doesn't exist" });
@@ -31,6 +30,27 @@ export async function login(req, res) {
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
+  let user = await authRepository.findUser(username);
+
+  if (user === null) {
+    const hash = await bcrypt.hash(password, 10);
+    await authRepository.createUser(username, hash, name, email, url);
+    user = await authRepository.findUser(username);
+
+    const token = jwt.sign(
+      {
+        id: username,
+        isAdmin: false,
+      },
+      process.env.JWT_SECRET
+    );
+
+    return res.status(201).json({ token, user });
+  } else {
+    return res
+      .status(400)
+      .json({ message: `username(${username}) already exist` });
+  }
 }
 
 export async function me(req, res) {}
