@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
-import { tweetRouter } from "./routers/index.js";
+import indexRouter from "./routers/index.js";
 import { connectDB } from "./database/database.js";
 
 const PORT = 8080;
@@ -13,13 +13,13 @@ app.use(morgan("tiny"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
-app.use("/tweets", tweetRouter);
+app.use("/", indexRouter);
 
 app.use((req, res) => {
   res.sendStatus(404);
 });
 
-app.use((error, res, req, next) => {
+app.use((error, req, res, next) => {
   console.error(error);
   res.sendStatus(500);
 });

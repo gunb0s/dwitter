@@ -68,3 +68,9 @@ export async function remove(id) {
     throw new Error(err);
   }
 }
+
+export async function findUser(username, password) {
+  let authCollection = db.collection("auth");
+
+  return await authCollection.findOne({ username });
+}
