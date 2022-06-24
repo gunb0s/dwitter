@@ -15,7 +15,7 @@ export async function login(req, res) {
     if (ok) {
       const token = jwt.sign(
         {
-          id: username,
+          username,
           isAdmin: false,
         },
         process.env.JWT_SECRET
@@ -39,7 +39,7 @@ export async function signup(req, res) {
 
     const token = jwt.sign(
       {
-        id: username,
+        username,
         isAdmin: false,
       },
       process.env.JWT_SECRET
@@ -53,4 +53,22 @@ export async function signup(req, res) {
   }
 }
 
-export async function me(req, res) {}
+export async function me(req, res) {
+  const authorization = req.headers.authorization;
+  const token = authorization.split(" ")[1];
+  const username = req.body.username;
+
+  if (token) {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (payload.username === username) {
+      return res.sendStatus(200);
+    } else {
+      return res.status(400).json({ message: "Invalid token" });
+    }
+  } else {
+    return res
+      .status(400)
+      .json({ message: "Token is not included in the header" });
+  }
+}
