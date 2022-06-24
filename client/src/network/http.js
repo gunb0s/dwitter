@@ -19,10 +19,11 @@ export class AxiosInstance {
       });
     } catch (err) {
       const {
-        response: {
-          data: { errors },
-        },
+        response: { data },
       } = err;
+
+      const errors = data?.errors;
+
       const message =
         errors && errors[0].msg ? errors[0].msg : "Something went wrong 😥";
       throw new Error(message);
