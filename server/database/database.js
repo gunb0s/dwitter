@@ -75,6 +75,12 @@ export async function findByUsername(username) {
   return await authCollection.findOne({ username });
 }
 
+export async function findById(id) {
+  let authCollection = db.collection("auth");
+
+  return await authCollection.findOne({ _id: new ObjectId(id) });
+}
+
 export async function createUser(user) {
   const { username, password, name, email, url } = user;
   let authCollection = db.collection("auth");

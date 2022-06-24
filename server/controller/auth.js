@@ -50,23 +50,11 @@ export async function signup(req, res) {
 }
 
 export async function me(req, res) {
-  const authorization = req.headers.authorization;
-  const token = authorization.split(" ")[1];
-  const username = req.body.username;
-
-  if (token) {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
-
-    if (payload.username === username) {
-      return res.sendStatus(200);
-    } else {
-      return res.status(400).json({ message: "Invalid token" });
-    }
-  } else {
-    return res
-      .status(400)
-      .json({ message: "Token is not included in the header" });
+  const user = await authRepository.findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
+  res.status(200).json({ token: req.token, username: user.username });
 }
 
 function createJwtToken(id) {

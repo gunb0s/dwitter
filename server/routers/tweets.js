@@ -2,6 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import * as tweetController from "../controller/tweet.js";
 import { validate } from "../middleware/validator.js";
+import { isAuth } from "../middleware/auth.js";
 
 // Contract Testing: Client-Server
 // Proto-Basing
@@ -17,6 +18,7 @@ router.get("/", tweetController.getTweets);
 
 router.post(
   "/",
+  isAuth,
   [
     body("username").trim().notEmpty(),
     body("name").trim().notEmpty(),
@@ -28,8 +30,13 @@ router.post(
 
 router.get("/:id", tweetController.getTweetById);
 
-router.put("/:id", [validateTweet, validate], tweetController.updateTweet);
+router.put(
+  "/:id",
+  isAuth,
+  [validateTweet, validate],
+  tweetController.updateTweet
+);
 
-router.delete("/:id", tweetController.removeTweet);
+router.delete("/:id", isAuth, tweetController.removeTweet);
 
 export default router;
