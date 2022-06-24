@@ -69,19 +69,22 @@ export async function remove(id) {
   }
 }
 
-export async function findUser(username) {
+export async function findByUsername(username) {
   let authCollection = db.collection("auth");
 
   return await authCollection.findOne({ username });
 }
 
-export async function createUser(username, password, name, email, url) {
+export async function createUser(user) {
+  const { username, password, name, email, url } = user;
   let authCollection = db.collection("auth");
-  await authCollection.insertOne({
-    username,
-    password,
-    name,
-    email,
-    url,
-  });
+  return authCollection
+    .insertOne({
+      username,
+      password,
+      name,
+      email,
+      url,
+    })
+    .then((result) => result.insertedId);
 }

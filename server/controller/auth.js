@@ -1,54 +1,50 @@
-import * as authRepository from "../database/database.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import * as authRepository from "../database/database.js";
+
+// MakeItSecure
+const jwtExpiresInDays = "2d";
+const bcryptSoltRounds = 12;
 
 export async function login(req, res) {
   const { username, password } = req.body;
 
-  const user = await authRepository.findUser(username);
+  const user = await authRepository.findByUsername(username);
 
   if (user === null) {
-    return res.status(400).json({ message: "it doesn't exist" });
+    return res.status(401).json({ message: "Invalid user or password" });
   } else {
-    const encrypted = user.password;
-    const ok = await bcrypt.compare(password, encrypted);
+    const ok = await bcrypt.compare(password, user.password);
     if (ok) {
-      const token = jwt.sign(
-        {
-          username,
-          isAdmin: false,
-        },
-        process.env.JWT_SECRET
-      );
+      const token = createJwtToken(user._id);
 
-      return res.status(200).json({ token, user });
+      return res.status(200).json({ token, username });
     } else {
-      return res.status(400).json({ message: "password is not correct" });
+      return res.status(401).json({ message: "Invalid user or password" });
     }
   }
 }
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
-  let user = await authRepository.findUser(username);
+  let user = await authRepository.findByUsername(username);
 
   if (user === null) {
-    const hash = await bcrypt.hash(password, 10);
-    await authRepository.createUser(username, hash, name, email, url);
-    user = await authRepository.findUser(username);
+    const hash = await bcrypt.hash(password, bcryptSoltRounds);
 
-    const token = jwt.sign(
-      {
-        username,
-        isAdmin: false,
-      },
-      process.env.JWT_SECRET
-    );
+    const userId = await authRepository.createUser({
+      username,
+      password: hash,
+      name,
+      email,
+      url,
+    });
+    const token = createJwtToken(userId);
 
-    return res.status(201).json({ token, user });
+    return res.status(201).json({ token, username });
   } else {
     return res
-      .status(400)
+      .status(409)
       .json({ message: `username(${username}) already exist` });
   }
 }
@@ -71,4 +67,10 @@ export async function me(req, res) {
       .status(400)
       .json({ message: "Token is not included in the header" });
   }
+}
+
+function createJwtToken(id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: jwtExpiresInDays,
+  });
 }

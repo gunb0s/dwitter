@@ -55,13 +55,6 @@ user {
         url?: string
     }
 
-**GET** /auth/me
-
-    Request {
-        token
-        username
-    }
-
 <br>
 
     Response 201 {
@@ -71,6 +64,22 @@ user {
     Error 400 {
         id already exist
     }
+
+**GET** /auth/me
+
+    headers: {
+        Authorization: Bearer token
+    }
+
+    Request {
+        username
+    }
+
+<br>
+
+    Response 200
+    Error 400 { Invalid token }
+    Error 400 { token not included }
 
 ### 🍟 Tweets
 
