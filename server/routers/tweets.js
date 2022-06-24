@@ -19,12 +19,7 @@ router.get("/", tweetController.getTweets);
 router.post(
   "/",
   isAuth,
-  [
-    body("username").trim().notEmpty(),
-    body("name").trim().notEmpty(),
-    validateTweet,
-    validate,
-  ],
+  [validateTweet, validate],
   tweetController.createTweets
 );
 

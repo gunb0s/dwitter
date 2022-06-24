@@ -4,10 +4,8 @@
 tweet {
     id: string,
     content: string,
-    name: string,
-    username: string,
-    url?: string,
-    createdAt: Date
+    createdAt: Date,
+    userId: string,
 }
 
 user {

@@ -10,53 +10,59 @@ export async function connectDB() {
     });
 }
 
-export async function getAll(username = undefined) {
+export async function getAll() {
   let tweetCollection = db.collection("tweets");
-  if (username === undefined) {
-    return await tweetCollection.find().toArray();
-  } else {
-    return await tweetCollection.find({ username }).toArray();
-  }
+  let tweets = await tweetCollection.find().toArray();
+
+  return Promise.all(
+    tweets.map(async (tweet) => {
+      const { username, name, url } = await findById(tweet.userId);
+      return { ...tweet, username, name, url };
+    })
+  );
+}
+
+export async function getAllByUsername(username) {
+  return getAll().then((tweets) =>
+    tweets.filter((tweet) => tweet.username === username)
+  );
 }
 
 export async function getById(id) {
   let tweetCollection = db.collection("tweets");
-  try {
-    const filter = { _id: new ObjectId(id) };
-    return await tweetCollection.find(filter).toArray();
-  } catch (err) {
-    throw new Error(err);
+
+  const filter = { _id: new ObjectId(id) };
+  const tweet = await tweetCollection.findOne(filter);
+
+  if (!tweet) {
+    return null;
   }
+  const { username, name, url } = await findById(tweet.userId);
+  return { ...tweet, username, name, url };
 }
 
-export async function create(username, name, content, url) {
+export async function create(content, userId) {
   let tweetCollection = db.collection("tweets");
   return tweetCollection
     .insertOne({
       content,
-      name,
-      username,
-      url,
+      userId,
     })
     .then((result) => result.insertedId)
-    .then((id) => tweetCollection.findOne({ _id: new ObjectId(id) }));
+    .then((id) => getById(id));
 }
 
 export async function update(id, content) {
   let tweetCollection = db.collection("tweets");
 
-  try {
-    const filter = { _id: new ObjectId(id) };
-    const update = {
-      $set: {
-        content,
-      },
-    };
-    await tweetCollection.updateOne(filter, update);
-    return await tweetCollection.findOne(filter);
-  } catch (err) {
-    throw new Error(err);
-  }
+  const filter = { _id: new ObjectId(id) };
+  const update = {
+    $set: {
+      content,
+    },
+  };
+  await tweetCollection.updateOne(filter, update);
+  return getById(id);
 }
 
 export async function remove(id) {
