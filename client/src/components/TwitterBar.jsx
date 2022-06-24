@@ -23,9 +23,7 @@ const TwitterBar = memo(() => {
         <img className={logo_image} src="twitter_logo.png" alt="logo" />
         <div className="text-2xl font-dancingScripts font-bold">Dwitter</div>
       </div>
-      <div className="text-sm font-joans ml-3 self-end cursor-pointer">
-        username
-      </div>
+      <div className="text-sm  ml-3 self-end cursor-pointer">username</div>
       {/* <div className={user_controll}>Logout</div> */}
       <div className={user_controll} onClick={onLogin}>
         LogIn

@@ -1,6 +1,6 @@
 import React from "react";
 
-const li = "text-sm font-joans cursor-pointer";
+const li = "text-sm  cursor-pointer";
 const span = "hover:bg-white p-1 pr-4 w-full";
 
 const TweetOperation = ({ onOperationClose, onEdit, handleDelete }) => {

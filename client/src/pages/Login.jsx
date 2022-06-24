@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Banner from "../components/Banner";
 
-const input = "outline-none font-joans px-3 py-1";
+const input = "outline-none  px-3 py-1";
 
 const Login = () => {
   const [signup, setSignup] = useState(false);

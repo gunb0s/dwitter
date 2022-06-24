@@ -25,7 +25,7 @@ const TweetInput = ({ tweetService, onCreated, onError }) => {
         required
         autoFocus
         value={tweet}
-        className="w-full outline-none p-2 font-joans"
+        className="w-full outline-none p-2 "
         type="text"
         placeholder="Enter tweet..."
         onChange={onChange}

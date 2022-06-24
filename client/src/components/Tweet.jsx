@@ -35,7 +35,7 @@ const Tweet = memo(({ tweet, onUpdate, onDelete, onError }) => {
             onError={onError}
           />
         ) : (
-          <div className="pb-8 break-all font-joans">{tweet.content}</div>
+          <div className="pb-8 break-all ">{tweet.content}</div>
         )}
       </div>
       {!editing && (

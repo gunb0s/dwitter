@@ -31,7 +31,7 @@ const TweetEditForm = ({ tweet, onUpdate, onEditClose, onError }) => {
   return (
     <div className="pb-8 w-full">
       <textarea
-        className="w-full h-full outline-none p-2 resize-none font-joans"
+        className="w-full h-full outline-none p-2 resize-none "
         required
         autoFocus
         type="text"

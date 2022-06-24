@@ -54,7 +54,7 @@ const Tweets = ({ tweetService, addable }) => {
         />
       )}
       {error && <Banner text={error} isAlert={true} transient={true} />}
-      {tweets.length === 0 && <p className="p-5 font-joans">No Tweets Yet</p>}
+      {tweets.length === 0 && <p className="p-5 ">No Tweets Yet</p>}
       <div className="w-full h-full bg-zinc-100 px-5 overflow-auto">
         {tweets.map((tweet) => (
           <Tweet
