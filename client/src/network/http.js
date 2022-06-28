@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export class AxiosInstance {
-  constructor() {
-    this.baseURL = process.env.REACT_APP_SERVER_URL;
+  constructor(baseURL) {
+    this.baseURL = baseURL;
   }
 
   async request(endpoint, options) {

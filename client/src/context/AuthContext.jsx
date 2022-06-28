@@ -64,9 +64,11 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
       {user ? (
         children
       ) : (
-        <div>
-          <TwitterBar />
-          <Login onSignup={signUp} onLogin={logIn} />
+        <div className="w-screen h-screen flex justify-center items-center overflow-auto">
+          <main className="w-[36rem] h-[50rem] bg-slate-200 drop-shadow-2xl flex flex-col">
+            <TwitterBar />
+            <Login onSignup={signUp} onLogin={logIn} />
+          </main>
         </div>
       )}
     </AuthContext.Provider>

@@ -1,4 +1,4 @@
-export class TweetService {
+export default class TweetService {
   constructor(axiosInstacne) {
     this.http = axiosInstacne;
   }
