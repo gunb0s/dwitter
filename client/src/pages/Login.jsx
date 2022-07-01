@@ -3,9 +3,8 @@ import Banner from "../components/Banner";
 
 const input = "outline-none px-3 py-1";
 
-const Login = () => {
+const Login = ({ onSignup, onLogin }) => {
   const [signup, setSignup] = useState(false);
-  const [error, setError] = useState("");
   const [signData, setSignData] = useState({
     username: "",
     password: "",
@@ -14,6 +13,8 @@ const Login = () => {
     email: "",
     avatar: "",
   });
+  const [text, setText] = useState("");
+  const [isAlert, setIsAlert] = useState(false);
 
   const onChange = (e) => {
     setSignData((prev) => {
@@ -26,24 +27,27 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const { username, password, name, email, avatar } = signData;
+
     if (signup) {
-      onSignup();
+      onSignup(username, password, name, email, avatar).catch(setError);
     } else {
-      onSignin();
+      onLogin(username, password).catch(setError);
     }
   };
-
-  const onSignup = () => {};
-
-  const onSignin = () => {};
 
   const onCreateAccountClick = () => {
     setSignup((prev) => !prev);
   };
 
+  const setError = (error) => {
+    setText(error.toString());
+    setIsAlert(true);
+  };
+
   return (
     <div>
-      {error && <Banner text={error} />}
+      <Banner text={text} isAlert={isAlert} />
       <form className="flex flex-col p-5 gap-3" onSubmit={onSubmit}>
         <input
           className={input}

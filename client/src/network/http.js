@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export class AxiosInstance {
-  constructor(baseURL) {
+  constructor(baseURL, authErrorEventBus) {
     this.baseURL = baseURL;
+    this.authErrorEventBus = authErrorEventBus;
   }
 
   async request(endpoint, options) {
@@ -26,7 +27,15 @@ export class AxiosInstance {
 
       const message =
         errors && errors[0].msg ? errors[0].msg : "Something went wrong 😥";
-      throw new Error(message);
+
+      const error = new Error(message);
+
+      if (err.response.status === 401) {
+        this.authErrorEventBus.notify(error);
+        return;
+      }
+
+      throw error;
     }
 
     return res.data;

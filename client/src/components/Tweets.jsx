@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import Tweet from "./Tweet";
 import TweetInput from "./TweetInput";
 import Banner from "./Banner";
+import { useAuth } from "../context/AuthContext";
 
-const Tweets = ({ tweetService, addable }) => {
+const Tweets = ({ tweetService, username, addable }) => {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState("");
+  const { user } = useAuth();
 
   useEffect(() => {
     tweetService
-      .getAll() ///
+      .getTweets(username) ///
       .then((tweets) => setTweets([...tweets]))
       .catch((error) => setError(error.toString()));
-  }, [tweetService]);
+  }, [tweetService, username, user]);
 
   const onCreated = (tweet) => {
     setTweets((tweets) => [tweet, ...tweets]);

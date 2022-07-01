@@ -1,13 +1,21 @@
 export default class TweetService {
-  constructor(axiosInstacne) {
-    this.http = axiosInstacne;
+  constructor(axiosInstance, tokenStorage) {
+    this.http = axiosInstance;
+    this.tokenStorage = tokenStorage;
   }
-  async getAll() {
-    return this.http.request("/tweets", { method: "get" });
+  async getTweets(username) {
+    const query = username ? `?username=${username}` : "";
+    return this.http.request(`/tweets${query}`, {
+      method: "get",
+      headers: this.getHeaders(),
+    });
   }
 
   async getById(id) {
-    return this.http.request(`/tweets/${id}`, { method: "get" });
+    return this.http.request(`/tweets/${id}`, {
+      method: "get",
+      headers: this.getHeaders(),
+    });
   }
 
   async create(content) {
@@ -18,6 +26,7 @@ export default class TweetService {
         username: "cain",
         name: "Bo Seong Kim",
       },
+      headers: this.getHeaders(),
     });
   }
 
@@ -25,10 +34,21 @@ export default class TweetService {
     return this.http.request(`/tweets/${id}`, {
       method: "put",
       data: { content },
+      headers: this.getHeaders(),
     });
   }
 
   async remove(id) {
-    return this.http.request(`/tweets/${id}`, { method: "delete" });
+    return this.http.request(`/tweets/${id}`, {
+      method: "delete",
+      headers: this.getHeaders(),
+    });
+  }
+
+  getHeaders() {
+    const token = this.tokenStorage.getToken();
+    return {
+      Authorization: `Bearer ${token}`,
+    };
   }
 }

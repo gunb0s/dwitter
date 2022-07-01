@@ -1,7 +1,7 @@
 export default class AuthService {
-  constructor(axiosInstance, tokenStroage) {
+  constructor(axiosInstance, tokenStorage) {
     this.http = axiosInstance;
-    this.tokenStroage = tokenStroage;
+    this.tokenStorage = tokenStorage;
   }
 
   async signup(username, password, name, email, url) {
@@ -16,11 +16,12 @@ export default class AuthService {
       },
     });
 
+    this.tokenStorage.saveToken(data.token);
     return data;
   }
 
   async login(username, password) {
-    const data = this.http.request("/auth/login", {
+    const data = await this.http.request("/auth/login", {
       method: "post",
       data: {
         username,
@@ -28,18 +29,21 @@ export default class AuthService {
       },
     });
 
+    this.tokenStorage.saveToken(data.token);
     return data;
   }
 
   async me() {
-    // const token = this.tokenStroage.getToken();
+    const token = this.tokenStorage.getToken();
     return this.http.request("/auth/me", {
       method: "get",
       headers: {
-        Authorization: "Bearer",
+        Authorization: `Bearer ${token}`,
       },
     });
   }
 
-  async logout() {}
+  async logout() {
+    this.tokenStorage.clearToken();
+  }
 }

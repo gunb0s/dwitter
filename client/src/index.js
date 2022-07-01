@@ -7,12 +7,14 @@ import { AxiosInstance } from "./network/http";
 import { AuthErrorEventBus, AuthProvider } from "./context/AuthContext";
 import TweetService from "./services/tweet";
 import AuthService from "./services/auth";
+import TokenStorage from "./db/token";
 
 const baseURL = process.env.REACT_APP_SERVER_URL;
 const authErrorEventBus = new AuthErrorEventBus();
-const axiosInstance = new AxiosInstance(baseURL);
-const tweetService = new TweetService(axiosInstance);
-const authService = new AuthService(axiosInstance);
+const tokenStorage = new TokenStorage();
+const axiosInstance = new AxiosInstance(baseURL, authErrorEventBus);
+const tweetService = new TweetService(axiosInstance, tokenStorage);
+const authService = new AuthService(axiosInstance, tokenStorage);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

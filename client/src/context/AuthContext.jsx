@@ -31,16 +31,17 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
     authService.me().then(setUser).catch(console.error);
   }, [authService]);
 
-  const signUp = useCallback(
+  const signup = useCallback(
     async (username, password, name, email, url) =>
       authService
-        .signUp(username, password, name, email, url)
+        .signup(username, password, name, email, url)
         .then((user) => setUser(user)),
     [authService]
   );
 
   const logIn = useCallback(
-    async () => authService.logout().then(() => setUser(undefined)),
+    async (username, password) =>
+      authService.login(username, password).then((user) => setUser(user)),
     [authService]
   );
 
@@ -52,11 +53,11 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
   const context = useMemo(
     () => ({
       user,
-      signUp,
+      signup,
       logIn,
       logout,
     }),
-    [user, signUp, logIn, logout]
+    [user, signup, logIn, logout]
   );
 
   return (
@@ -67,7 +68,7 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
         <div className="w-screen h-screen flex justify-center items-center overflow-auto">
           <main className="w-[36rem] h-[50rem] bg-slate-200 drop-shadow-2xl flex flex-col">
             <TwitterBar />
-            <Login onSignup={signUp} onLogin={logIn} />
+            <Login onSignup={signup} onLogin={logIn} />
           </main>
         </div>
       )}
