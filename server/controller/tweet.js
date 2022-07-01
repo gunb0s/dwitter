@@ -31,22 +31,29 @@ export async function getTweetById(req, res) {
 export async function updateTweet(req, res) {
   const { content } = req.body;
   const { id } = req.params;
-
-  try {
-    let tweet = await tweetRepository.update(id, content);
-    res.status(200).json(tweet);
-  } catch (err) {
-    res.status(400).json({ message: `invalid id(${id})` });
+  const tweet = await tweetRepository.getById(id);
+  if (!tweet) {
+    return res.sendStatus(404);
   }
+  if (tweet.userId.toString() !== req.userId) {
+    return res.sendStatus(403);
+  }
+
+  let updated = await tweetRepository.update(id, content);
+  res.status(200).json(updated);
 }
 
 export async function removeTweet(req, res) {
   const { id } = req.params;
 
-  try {
-    await tweetRepository.remove(id);
-    res.sendStatus(204);
-  } catch (err) {
-    res.status(400).json({ message: `invalid id(${id})` });
+  const tweet = await tweetRepository.getById(id);
+  if (!tweet) {
+    return res.sendStatus(404);
   }
+  if (tweet.userId.toString() !== req.userId) {
+    return res.sendStatus(403);
+  }
+
+  await tweetRepository.remove(id);
+  res.sendStatus(204);
 }
