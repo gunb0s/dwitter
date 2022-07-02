@@ -1,10 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { config } from "../config.js";
 import * as authRepository from "../database/database.js";
-
-// MakeItSecure
-const jwtExpiresInDays = "2d";
-const bcryptSoltRounds = 12;
 
 export async function login(req, res) {
   const { username, password } = req.body;
@@ -30,8 +27,7 @@ export async function signup(req, res) {
   let user = await authRepository.findByUsername(username);
 
   if (user === null) {
-    const hash = await bcrypt.hash(password, bcryptSoltRounds);
-
+    const hash = await bcrypt.hash(password, config.bcrypt.slatRounds);
     const userId = await authRepository.createUser({
       username,
       password: hash,
@@ -58,7 +54,7 @@ export async function me(req, res) {
 }
 
 function createJwtToken(id) {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: jwtExpiresInDays,
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
   });
 }

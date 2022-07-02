@@ -4,8 +4,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import indexRouter from "./routers/index.js";
 import { connectDB } from "./database/database.js";
-
-const PORT = 8080;
+import { config } from "./config.js";
 
 const app = express();
 app.use(cors());
@@ -26,6 +25,6 @@ app.use((error, req, res, next) => {
 
 connectDB()
   .then(() => {
-    const server = app.listen(PORT);
+    const server = app.listen(config.host.port);
   })
   .catch(console.error);
