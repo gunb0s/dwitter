@@ -5,6 +5,7 @@ import helmet from "helmet";
 import indexRouter from "./routers/index.js";
 import { connectDB } from "./database/database.js";
 import { config } from "./config.js";
+import { Server } from "socket.io";
 
 const app = express();
 app.use(cors());
@@ -26,5 +27,14 @@ app.use((error, req, res, next) => {
 connectDB()
   .then(() => {
     const server = app.listen(config.host.port);
+    const socketIO = new Server(server, {
+      cors: {
+        origin: "*",
+      },
+    });
+
+    socketIO.on("connection", (socket) => {
+      console.log("Client visited server!");
+    });
   })
   .catch(console.error);

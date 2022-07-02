@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import socket from "socket.io-client";
 import "./index.css";
 import App from "./App";
 import { AxiosInstance } from "./network/http";
@@ -15,6 +16,12 @@ const tokenStorage = new TokenStorage();
 const axiosInstance = new AxiosInstance(baseURL, authErrorEventBus);
 const tweetService = new TweetService(axiosInstance, tokenStorage);
 const authService = new AuthService(axiosInstance, tokenStorage);
+
+const socketIO = socket(baseURL);
+socketIO.on("connect_error", (error) => {
+  console.log("socket error", error);
+});
+socketIO.on("dwitter", (message) => console.log(message));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
