@@ -13,7 +13,7 @@ const TweetInput = ({ tweetService, onCreated, onError }) => {
         .create(tweet) ///
         .then((created) => {
           setTweet("");
-          onCreated(created);
+          // onCreated(created);
         })
         .catch(onError);
     }

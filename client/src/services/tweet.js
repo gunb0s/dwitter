@@ -1,7 +1,8 @@
 export default class TweetService {
-  constructor(axiosInstance, tokenStorage) {
+  constructor(axiosInstance, tokenStorage, socket) {
     this.http = axiosInstance;
     this.tokenStorage = tokenStorage;
+    this.socket = socket;
   }
   async getTweets(username) {
     const query = username ? `?username=${username}` : "";
@@ -50,5 +51,9 @@ export default class TweetService {
     return {
       Authorization: `Bearer ${token}`,
     };
+  }
+
+  onSync(callback) {
+    return this.socket.onSync("tweets", callback);
   }
 }
