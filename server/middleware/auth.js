@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config.js";
-import * as authRepository from "../database/database.js";
+import * as authRepository from "../db/database.js";
 
 const AUTH_ERROR = { message: "Authentication Error" };
 

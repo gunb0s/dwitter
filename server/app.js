@@ -3,10 +3,9 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import indexRouter from "./routers/index.js";
-import { connectDB } from "./database/database.js";
 import { config } from "./config.js";
-import { Server } from "socket.io";
 import { initSocket } from "./connection/socket.js";
+import { db } from "./db/database.js";
 
 const app = express();
 app.use(cors());
@@ -24,10 +23,7 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.sendStatus(500);
 });
+db.getConnection().then(console.log);
 
-connectDB()
-  .then(() => {
-    const server = app.listen(config.host.port);
-    initSocket(server);
-  })
-  .catch(console.error);
+const server = app.listen(config.host.port);
+initSocket(server);

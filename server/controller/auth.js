@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { config } from "../config.js";
-import * as authRepository from "../database/database.js";
+import * as authRepository from "../db/database.js";
 
 export async function login(req, res) {
   const { username, password } = req.body;
