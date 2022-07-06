@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { config } from "../config.js";
-import * as authRepository from "../db/database.js";
+import * as authRepository from "../data/auth.js";
 
 export async function login(req, res) {
   const { username, password } = req.body;
@@ -13,7 +13,7 @@ export async function login(req, res) {
   } else {
     const ok = await bcrypt.compare(password, user.password);
     if (ok) {
-      const token = createJwtToken(user._id);
+      const token = createJwtToken(user.id);
 
       return res.status(200).json({ token, username });
     } else {

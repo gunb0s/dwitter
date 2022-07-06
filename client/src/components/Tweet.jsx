@@ -11,7 +11,7 @@ const Tweet = memo(({ tweet, onUpdate, onDelete, onError }) => {
   const onEdit = () => setEditing(true);
   const onEditClose = () => setEditing(false);
   const handleDelete = () => {
-    onDelete(tweet._id);
+    onDelete(tweet.id);
   };
 
   return (
