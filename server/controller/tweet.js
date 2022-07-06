@@ -37,11 +37,12 @@ export async function updateTweet(req, res) {
   if (!tweet) {
     return res.sendStatus(404);
   }
-  if (tweet.userId.toString() !== req.userId) {
+
+  if (tweet.userId !== Number(req.userId)) {
     return res.sendStatus(403);
   }
 
-  let updated = await tweetRepository.update(id, content);
+  let updated = await tweetRepository.update(content, id);
   res.status(200).json(updated);
 }
 
@@ -52,7 +53,7 @@ export async function removeTweet(req, res) {
   if (!tweet) {
     return res.sendStatus(404);
   }
-  if (tweet.userId.toString() !== req.userId) {
+  if (tweet.userId !== Number(req.userId)) {
     return res.sendStatus(403);
   }
 
