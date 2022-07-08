@@ -12,6 +12,9 @@ function required(key, defaultValue = undefined) {
 export const config = {
   db: {
     host: required("DB_HOST"),
+    database: required("DB_DATABASE"),
+    user: required("DB_USER"),
+    password: required("DB_PASSWORD"),
   },
   jwt: {
     secretKey: required("JWT_SECRET"),

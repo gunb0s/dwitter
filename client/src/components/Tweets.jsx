@@ -28,7 +28,7 @@ const Tweets = ({ tweetService, username, addable }) => {
       .update(id, content) ///
       .then((updated) =>
         setTweets((tweets) =>
-          tweets.map((item) => (item._id === updated._id ? updated : item))
+          tweets.map((item) => (item.id === updated.id ? updated : item))
         )
       )
       .catch((error) => onError(error.toString()));
@@ -38,7 +38,7 @@ const Tweets = ({ tweetService, username, addable }) => {
     tweetService ///
       .remove(id)
       .then(() =>
-        setTweets((tweets) => tweets.filter((item) => item._id !== id))
+        setTweets((tweets) => tweets.filter((item) => item.id !== id))
       );
   };
 
@@ -63,7 +63,7 @@ const Tweets = ({ tweetService, username, addable }) => {
       <div className="w-full h-full bg-zinc-100 px-5 overflow-auto">
         {tweets.map((tweet) => (
           <Tweet
-            key={tweet._id}
+            key={tweet.id}
             tweet={tweet}
             onUpdate={onUpdate}
             onDelete={onDelete}

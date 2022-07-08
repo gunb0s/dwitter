@@ -1,5 +1,5 @@
 import { getSocketIO } from "../connection/socket.js";
-import * as tweetRepository from "../database/database.js";
+import * as tweetRepository from "../data/tweet.js";
 
 export async function getTweets(req, res) {
   if ("username" in req.query) {

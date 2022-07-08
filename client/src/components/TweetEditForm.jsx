@@ -13,7 +13,7 @@ const TweetEditForm = ({ tweet, onUpdate, onEditClose, onError }) => {
       onError(new Error("content should not be empty"));
       return;
     }
-    onUpdate(tweet._id, content);
+    onUpdate(tweet.id, content);
     setContent("");
     onEditClose();
   };
